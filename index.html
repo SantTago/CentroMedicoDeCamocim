@@ -1,0 +1,918 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro Médico de Camocim</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        white: '#ffffff',
+                        gold: '#D4AF37', // Changed to a richer gold color
+                        navy: '#273353',
+                    },
+                    fontFamily: {
+                        'sans': ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .hero-pattern {
+            background-color: #ffffff;
+            background-image: radial-gradient(#273353 0.5px, transparent 0.5px), radial-gradient(#273353 0.5px, #ffffff 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            opacity: 0.05;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(39, 51, 83, 0.1), 0 10px 10px -5px rgba(39, 51, 83, 0.04);
+        }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%); /* Enhanced gold gradient */
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #D4AF37; /* Updated gold color */
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .service-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover .service-icon {
+            transform: scale(1.1);
+            color: #D4AF37; /* Updated gold color */
+        }
+        
+        .scroll-to-top {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 99;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        
+        .scroll-to-top:hover {
+            opacity: 0.8;
+        }
+        
+        .logo-text {
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            /* Gold metallic effect for logo */
+            background: linear-gradient(to bottom, #F0E68C 0%, #D4AF37 50%, #B8860B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.3));
+        }
+        
+        /* Enhanced gold elements */
+        .gold-element {
+            color: #ffffff;
+        }
+        
+        .gold-bg {
+            background-color: #D4AF37;
+        }
+        
+        .gold-border {
+            border-color: #D4AF37;
+        }
+        
+        /* Gold shine effect */
+        .gold-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gold-shine::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) rotate(30deg);
+            }
+            100% {
+                transform: translateX(100%) rotate(30deg);
+            }
+        }
+    </style>
+</head>
+<body class="bg-white text-navy">
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="mr-2">
+                    <span class="text-3xl font-bold logo-text">CMC</span>
+                </div>
+                <div>
+                    <h1 class="text-navy font-semibold text-lg md:text-xl hidden sm:block">Centro Médico de Camocim</h1>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#inicio" class="nav-link text-navy hover:text-[#D4AF37] transition duration-300">Início</a>
+                <a href="#sobre" class="nav-link text-navy hover:text-[#D4AF37] transition duration-300">Sobre</a>
+                <a href="#servicos" class="nav-link text-navy hover:text-[#D4AF37] transition duration-300">Serviços</a>
+                <a href="#contato" class="nav-link text-navy hover:text-[#D4AF37] transition duration-300">Contato</a>
+            </div>
+            
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-navy focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="#inicio" class="text-navy hover:text-[#D4AF37] transition duration-300 py-2">Início</a>
+                <a href="#sobre" class="text-navy hover:text-[#D4AF37] transition duration-300 py-2">Sobre</a>
+                <a href="#servicos" class="text-navy hover:text-[#D4AF37] transition duration-300 py-2">Serviços</a>
+                <a href="#contato" class="text-navy hover:text-[#D4AF37] transition duration-300 py-2">Contato</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="relative overflow-hidden" style="background-image: url('https://i.ibb.co/gbGnGbgL/bloggif-683c546b12e58.gif'); background-size: cover; background-position: center; min-height: 400px;">
+    <div class="hero-pattern absolute inset-0"></div>
+    <div class="container mx-auto px-4 py-16 md:py-24 relative z-10">
+        <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-navy mb-6">Cuidando da sua saúde com <span class="gold-element">excelência</span></h2>
+                <p class="text-lg text-gray-700 mb-8">O Centro Médico de Camocim oferece atendimento de qualidade com profissionais especializados para cuidar de você e sua família.</p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#servicos" class="bg-navy hover:bg-opacity-90 text-white font-medium py-3 px-6 rounded-lg transition duration-300 text-center">Nossos Serviços</a>
+                    <a href="#contato" class="border-2 border-[#D4AF37] text-navy hover:bg-[#D4AF37] hover:text-white font-medium py-3 px-6 rounded-lg transition duration-300 text-center">Agende uma Consulta</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+
+
+    <!----------------------------------------------------------------------->
+<section id="sobre" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col lg:flex-row items-center">
+            <div class="lg:w-1/2 lg:pr-12 mb-8 lg:mb-0">
+                <div class="relative">
+                    <div class="bg-navy w-24 h-24 rounded-full absolute -top-6 -left-6 opacity-20"></div>
+                    <div class="bg-[#D4AF37] w-32 h-32 rounded-full absolute -bottom-6 -right-6 opacity-20"></div>
+                    <div class="relative z-10 bg-gray-200 h-96 rounded-lg overflow-hidden">
+                        <img src="width_800.jpeg" alt="Interior moderno e acolhedor do Centro Médico" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+            <div class="lg:w-1/2">
+                <div class="inline-block mb-6">
+                    <span class="text-navy font-semibold px-4 py-1 bg-blue-50 rounded-full">Sobre Nós</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-navy mb-6">Bem-vindo ao Centro Médico de Camocim</h2>
+                <p class="text-gray-700 mb-6 leading-relaxed">
+                    No Centro Médico de Camocim, nossa prioridade é oferecer cuidados de saúde excepcionais e abrangentes para você e sua família. Contamos com uma equipe de profissionais altamente qualificados e dedicados, prontos para atender às suas necessidades com atenção e profissionalismo.
+                </p>
+                <p class="text-gray-700 mb-8 leading-relaxed">
+                    Nossas instalações modernas e acolhedoras são equipadas com tecnologia de ponta, garantindo diagnósticos precisos e tratamentos eficazes. Oferecemos uma ampla gama de especialidades médicas e serviços para cuidar da sua saúde em todas as fases da vida.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="flex items-start">
+                        <div class="bg-navy bg-opacity-10 rounded-full p-2 mr-4">
+                            <i class="fas fa-check text-navy"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-navy mb-1">Atendimento Humanizado</h4>
+                            <p class="text-gray-700 text-sm">Cuidado e respeito em cada consulta</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="bg-navy bg-opacity-10 rounded-full p-2 mr-4">
+                            <i class="fas fa-check text-navy"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-navy mb-1">Tecnologia de Ponta</h4>
+                            <p class="text-gray-700 text-sm">Equipamentos modernos para diagnósticos precisos</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="bg-navy bg-opacity-10 rounded-full p-2 mr-4">
+                            <i class="fas fa-check text-navy"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-navy mb-1">Equipe Multidisciplinar</h4>
+                            <p class="text-gray-700 text-sm">Profissionais experientes em diversas especialidades</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="bg-navy bg-opacity-10 rounded-full p-2 mr-4">
+                            <i class="fas fa-check text-navy"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-navy mb-1">Ampla Gama de Serviços</h4>
+                            <p class="text-gray-700 text-sm">Cuidado completo para todas as suas necessidades</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="#servicos" class="bg-navy hover:bg-opacity-90 text-white font-medium py-3 px-6 rounded-lg transition duration-300 inline-block">Conheça Nossos Serviços</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!------------------------------------------------------->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+    <style>
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px #999;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+    </style>
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/5588992008850" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+
+    <!------------------------------------------------>
+
+
+    <!-- About Section -->
+    <section class="bg-gray-50 py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-navy mb-2">O Centro Médico De Camocim</h2>
+                <div class="w-24 h-1 bg-[#D4AF37] mx-auto mb-6 gold-shine"></div>
+                <p class="text-gray-700 max-w-3xl mx-auto">Dedicados à saúde e bem-estar da comunidade de Camocim, oferecemos atendimento humanizado e de qualidade com uma equipe multidisciplinar de profissionais.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                    <div class="text-[#D4AF37] text-4xl mb-4">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-navy mb-3">Profissionais Qualificados</h3>
+                    <p class="text-gray-700">Nossa equipe é formada por médicos e especialistas com vasta experiência e constante atualização.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                    <div class="text-[#D4AF37] text-4xl mb-4">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-navy mb-3">Atendimento Humanizado</h3>
+                    <p class="text-gray-700">Priorizamos o acolhimento e o cuidado personalizado para cada paciente que nos procura.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+                    <div class="text-[#D4AF37] text-4xl mb-4">
+                        <i class="fas fa-clinic-medical"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-navy mb-3">Estrutura Moderna</h3>
+                    <p class="text-gray-700">Contamos com instalações confortáveis e equipamentos de última geração para melhor atendê-lo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicos" class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-navy mb-2">Nossos Serviços</h2>
+                <div class="w-24 h-1 bg-[#D4AF37] mx-auto mb-6 gold-shine"></div>
+                <p class="text-gray-700 max-w-3xl mx-auto">Oferecemos uma ampla gama de serviços médicos e especializados para cuidar da saúde de toda a família.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+                <!-- Service 1 -->
+                <div class="service-card bg-white p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="service-icon text-[#D4AF37] text-3xl mb-4">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-navy mb-2">Atestado de Saúde Ocupacional (ASO)</h3>
+                    <p class="text-gray-700">Emissão de atestados para admissão, periódicos e demissionais, atendendo às normas trabalhistas.</p>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-card bg-white p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="service-icon text-[#D4AF37] text-3xl mb-4">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-navy mb-2">MAPA e Eletrocardiograma</h3>
+                    <p class="text-gray-700">Monitorização ambulatorial da pressão arterial e exames cardíacos para avaliação da saúde do coração.</p>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="service-card bg-white p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="service-icon text-[#D4AF37] text-3xl mb-4">
+                        <i class="fas fa-x-ray"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-navy mb-2">Raio-X e Ultrassonografia</h3>
+                    <p class="text-gray-700">Exames de imagem para diagnóstico preciso de diversas condições de saúde.</p>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="service-card bg-white p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="service-icon text-[#D4AF37] text-3xl mb-4">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-navy mb-2">Exames Laboratoriais</h3>
+                    <p class="text-gray-700">Análises clínicas completas para avaliação da saúde e acompanhamento de tratamentos.</p>
+                </div>
+                
+                <!-- Service 5 -->
+                <div class="service-card bg-white p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="service-icon text-[#D4AF37] text-3xl mb-4">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-navy mb-2">Psicologia e Psicopedagogia</h3>
+                    <p class="text-gray-700">Atendimento especializado para saúde mental e desenvolvimento cognitivo.</p>
+                </div>
+                
+                <!-- Service 6 -->
+                <div class="service-card bg-white p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="service-icon text-[#D4AF37] text-3xl mb-4">
+                        <i class="fas fa-apple-alt"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-navy mb-2">Nutrição e Nutrição Materno Infantil</h3>
+                    <p class="text-gray-700">Orientação nutricional personalizada para todas as idades, incluindo gestantes e crianças.</p>
+                </div>
+                
+                <!-- Service 7 -->
+                <div class="service-card bg-white p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="service-icon text-[#D4AF37] text-3xl mb-4">
+                        <i class="fas fa-walking"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-navy mb-2">Fisioterapia e Fisioterapia Infantil</h3>
+                    <p class="text-gray-700">Tratamentos para reabilitação e melhoria da qualidade de vida para adultos e crianças.</p>
+                </div>
+                
+                <!-- Service 8 -->
+                <div class="service-card bg-white p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="service-icon text-[#D4AF37] text-3xl mb-4">
+                        <i class="fas fa-baby"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-navy mb-2">Pré-natal e Prevenção</h3>
+                    <p class="text-gray-700">Acompanhamento completo da gestação e exames preventivos para saúde da mulher.</p>
+                </div>
+                
+                <!-- Service 9 -->
+                <div class="service-card bg-white p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="service-icon text-[#D4AF37] text-3xl mb-4">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-navy mb-2">Consultas Especializadas</h3>
+                    <p class="text-gray-700">Atendimento com Clínico Geral, Ortopedista e Ginecologista para cuidados específicos.</p>
+                </div>
+                
+                <!-- Service 10 -->
+                <div class="service-card bg-white p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="service-icon text-[#D4AF37] text-3xl mb-4">
+                        <i class="fas fa-syringe"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-navy mb-2">Infiltrações e Pequenas Cirurgias</h3>
+                    <p class="text-gray-700">Procedimentos ambulatoriais realizados com segurança e profissionalismo.</p>
+                </div>
+                
+                <!-- Service 11 -->
+                <div class="service-card bg-white p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="service-icon text-[#D4AF37] text-3xl mb-4">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-navy mb-2">Terapia Ocupacional</h3>
+                    <p class="text-gray-700">Tratamentos para desenvolvimento de habilidades e autonomia nas atividades diárias.</p>
+                </div>
+                
+                <!-- Service 12 -->
+                <div class="service-card bg-white p-6 rounded-lg shadow-md transition duration-300">
+                    <div class="service-icon text-[#D4AF37] text-3xl mb-4">
+                        <i class="fas fa-comment-medical"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-navy mb-2">Fonoaudiologia</h3>
+                    <p class="text-gray-700">Avaliação e tratamento de distúrbios da comunicação, voz, fala e linguagem.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-navy">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-white mb-6">Agende sua consulta hoje mesmo</h2>
+            <p class="text-white text-lg mb-8 max-w-2xl mx-auto">Cuide da sua saúde com os melhores profissionais. Entre em contato conosco para marcar seu atendimento.</p>
+            <a href="#contato" class="inline-block bg-[#D4AF37] hover:bg-[#B8860B] text-navy font-medium py-3 px-8 rounded-lg transition duration-300 text-lg gold-shine">Agendar Consulta</a>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-navy mb-2">O que dizem nossos pacientes</h2>
+                <div class="w-24 h-1 bg-[#D4AF37] mx-auto mb-6 gold-shine"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-[#D4AF37]">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Excelente atendimento! Os profissionais são muito atenciosos e competentes. Recomendo a todos que precisam de cuidados médicos de qualidade."</p>
+                    <div class="font-medium text-navy">Maria Silva</div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-[#D4AF37]">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Estrutura moderna e confortável. Fiz meus exames com rapidez e os resultados foram entregues no prazo. Muito satisfeito com o serviço."</p>
+                    <div class="font-medium text-navy">João Santos</div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="text-[#D4AF37]">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Minha filha faz acompanhamento com a fisioterapeuta infantil e estamos vendo resultados incríveis. Equipe muito preparada e dedicada."</p>
+                    <div class="font-medium text-navy">Ana Oliveira</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!----------------------------------------------------------->
+
+    <!-- Galeria de Produtos -->
+    <section id="galeria" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <div class="inline-block mb-4">
+                    <span class="text-primary font-semibold px-4 py-1 bg-blue-50 rounded-full">Nossa Galeria</span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-secondary mb-4">Conheços Clientes</h2>
+                
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Item 1 -->
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md">
+                    <div class="h-64 bg-gray-200 relative">
+                        <!-- Placeholder para imagem -->
+                        <svg class="w-full h-full text-gray-400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor" viewBox="0 0 640 512">
+                            <path d="M480 80C480 35.82 515.8 0 560 0C604.2 0 640 35.82 640 80C640 124.2 604.2 160 560 160C515.8 160 480 124.2 480 80zM0 456.1C0 445.6 2.964 435.3 8.551 426.4L225.3 81.01C231.9 70.42 243.5 64 256 64C268.5 64 280.1 70.42 286.8 81.01L412.7 281.7L460.9 202.7C464.1 196.1 472.2 192 480 192C487.8 192 495 196.1 499.1 202.7L631.1 419.1C636.9 428.6 640 439.7 640 450.9C640 484.6 612.6 512 578.9 512H55.91C25.03 512 .0006 486.1 .0006 456.1L0 456.1z"/>
+                        </svg>
+                        <div class="absolute inset-0 bg-gradient-to-t from-secondary to-transparent opacity-70 flex items-end">
+                            <div class="p-4 text-white">
+                                <h3 class="font-bold text-lg">Prótese Transfemoral</h3>
+                                <p class="text-sm">Com joelho hidráulico e pé de resposta dinâmica</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 2 -->
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md">
+                    <div class="h-64 bg-gray-200 relative">
+                        <!-- Placeholder para imagem -->
+                        <svg class="w-full h-full text-gray-400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor" viewBox="0 0 640 512">
+                            <path d="M480 80C480 35.82 515.8 0 560 0C604.2 0 640 35.82 640 80C640 124.2 604.2 160 560 160C515.8 160 480 124.2 480 80zM0 456.1C0 445.6 2.964 435.3 8.551 426.4L225.3 81.01C231.9 70.42 243.5 64 256 64C268.5 64 280.1 70.42 286.8 81.01L412.7 281.7L460.9 202.7C464.1 196.1 472.2 192 480 192C487.8 192 495 196.1 499.1 202.7L631.1 419.1C636.9 428.6 640 439.7 640 450.9C640 484.6 612.6 512 578.9 512H55.91C25.03 512 .0006 486.1 .0006 456.1L0 456.1z"/>
+                        </svg>
+                        <div class="absolute inset-0 bg-gradient-to-t from-secondary to-transparent opacity-70 flex items-end">
+                            <div class="p-4 text-white">
+                                <h3 class="font-bold text-lg">Prótese Transtibial</h3>
+                                <p class="text-sm">Com encaixe de silicone e pé articulado</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 3 -->
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md">
+                    <div class="h-64 bg-gray-200 relative">
+                        <!-- Placeholder para imagem -->
+                        <svg class="w-full h-full text-gray-400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor" viewBox="0 0 640 512">
+                            <path d="M480 80C480 35.82 515.8 0 560 0C604.2 0 640 35.82 640 80C640 124.2 604.2 160 560 160C515.8 160 480 124.2 480 80zM0 456.1C0 445.6 2.964 435.3 8.551 426.4L225.3 81.01C231.9 70.42 243.5 64 256 64C268.5 64 280.1 70.42 286.8 81.01L412.7 281.7L460.9 202.7C464.1 196.1 472.2 192 480 192C487.8 192 495 196.1 499.1 202.7L631.1 419.1C636.9 428.6 640 439.7 640 450.9C640 484.6 612.6 512 578.9 512H55.91C25.03 512 .0006 486.1 .0006 456.1L0 456.1z"/>
+                        </svg>
+                        <div class="absolute inset-0 bg-gradient-to-t from-secondary to-transparent opacity-70 flex items-end">
+                            <div class="p-4 text-white">
+                                <h3 class="font-bold text-lg">Prótese de Mão</h3>
+                                <p class="text-sm">Com movimentos articulados dos dedos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 4 -->
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md">
+                    <div class="h-64 bg-gray-200 relative">
+                        <!-- Placeholder para imagem -->
+                        <svg class="w-full h-full text-gray-400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor" viewBox="0 0 640 512">
+                            <path d="M480 80C480 35.82 515.8 0 560 0C604.2 0 640 35.82 640 80C640 124.2 604.2 160 560 160C515.8 160 480 124.2 480 80zM0 456.1C0 445.6 2.964 435.3 8.551 426.4L225.3 81.01C231.9 70.42 243.5 64 256 64C268.5 64 280.1 70.42 286.8 81.01L412.7 281.7L460.9 202.7C464.1 196.1 472.2 192 480 192C487.8 192 495 196.1 499.1 202.7L631.1 419.1C636.9 428.6 640 439.7 640 450.9C640 484.6 612.6 512 578.9 512H55.91C25.03 512 .0006 486.1 .0006 456.1L0 456.1z"/>
+                        </svg>
+                        <div class="absolute inset-0 bg-gradient-to-t from-secondary to-transparent opacity-70 flex items-end">
+                            <div class="p-4 text-white">
+                                <h3 class="font-bold text-lg">Órtese para Joelho</h3>
+                                <p class="text-sm">Com articulação e ajuste de amplitude</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 5 -->
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md">
+                    <div class="h-64 bg-gray-200 relative">
+                        <!-- Placeholder para imagem -->
+                        <svg class="w-full h-full text-gray-400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor" viewBox="0 0 640 512">
+                            <path d="M480 80C480 35.82 515.8 0 560 0C604.2 0 640 35.82 640 80C640 124.2 604.2 160 560 160C515.8 160 480 124.2 480 80zM0 456.1C0 445.6 2.964 435.3 8.551 426.4L225.3 81.01C231.9 70.42 243.5 64 256 64C268.5 64 280.1 70.42 286.8 81.01L412.7 281.7L460.9 202.7C464.1 196.1 472.2 192 480 192C487.8 192 495 196.1 499.1 202.7L631.1 419.1C636.9 428.6 640 439.7 640 450.9C640 484.6 612.6 512 578.9 512H55.91C25.03 512 .0006 486.1 .0006 456.1L0 456.1z"/>
+                        </svg>
+                        <div class="absolute inset-0 bg-gradient-to-t from-secondary to-transparent opacity-70 flex items-end">
+                            <div class="p-4 text-white">
+                                <h3 class="font-bold text-lg">Órtese para Coluna</h3>
+                                <p class="text-sm">Colete torácico-lombar personalizado</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 6 -->
+                <div class="gallery-item rounded-lg overflow-hidden shadow-md">
+                    <div class="h-64 bg-gray-200 relative">
+                        <!-- Placeholder para imagem -->
+                        <svg class="w-full h-full text-gray-400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor" viewBox="0 0 640 512">
+                            <path d="M480 80C480 35.82 515.8 0 560 0C604.2 0 640 35.82 640 80C640 124.2 604.2 160 560 160C515.8 160 480 124.2 480 80zM0 456.1C0 445.6 2.964 435.3 8.551 426.4L225.3 81.01C231.9 70.42 243.5 64 256 64C268.5 64 280.1 70.42 286.8 81.01L412.7 281.7L460.9 202.7C464.1 196.1 472.2 192 480 192C487.8 192 495 196.1 499.1 202.7L631.1 419.1C636.9 428.6 640 439.7 640 450.9C640 484.6 612.6 512 578.9 512H55.91C25.03 512 .0006 486.1 .0006 456.1L0 456.1z"/>
+                        </svg>
+                        <div class="absolute inset-0 bg-gradient-to-t from-secondary to-transparent opacity-70 flex items-end">
+                            <div class="p-4 text-white">
+                                <h3 class="font-bold text-lg">Órtese para Punho</h3>
+                                <p class="text-sm">Com suporte para polegar e ajuste de posição</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-10">
+                <a href="#" class="btn-primary px-8 py-3 rounded-full font-medium inline-block">Ver Galeria Completa</a>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!------------------------------------------------------------------->
+
+
+
+
+
+    <!-- Contact Section -->
+    <section id="contato" class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-navy mb-2">Entre em Contato</h2>
+                <div class="w-24 h-1 bg-[#D4AF37] mx-auto mb-6 gold-shine"></div>
+                <p class="text-gray-700 max-w-3xl mx-auto">Estamos à disposição para atender você e sua família. Entre em contato para agendar consultas ou tirar dúvidas.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12">
+                <div>
+                    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                        <h3 class="text-xl font-semibold text-navy mb-4">Informações de Contato</h3>
+                        
+                        <div class="flex items-start mb-4">
+                            <div class="text-[#D4AF37] text-xl mr-4">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-navy">Endereço</h4>
+                                <p class="text-gray-700">R. Riachuelo, Nº 1668, Camocim - CE</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start mb-4">
+                            <div class="text-[#D4AF37] text-xl mr-4">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-navy">Telefone</h4>
+                                <p class="text-gray-700">(88) 9200-8850</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start mb-4">
+                            <div class="text-[#D4AF37] text-xl mr-4">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-navy">Horário de Funcionamento</h4>
+                                <p class="text-gray-700">Segunda a Sexta: 8h às 18h<br>Sábado: 8h às 12h</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-semibold text-navy mb-4">Redes Sociais</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 rounded-full bg-navy flex items-center justify-center text-white hover:bg-[#D4AF37] transition duration-300">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-navy flex items-center justify-center text-white hover:bg-[#D4AF37] transition duration-300">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-navy flex items-center justify-center text-white hover:bg-[#D4AF37] transition duration-300">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-semibold text-navy mb-4">Envie uma Mensagem</h3>
+                    <form id="contact-form" class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-navy mb-1">Nome</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4AF37]">
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-navy mb-1">E-mail</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4AF37]">
+                        </div>
+                        
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-navy mb-1">Telefone</label>
+                            <input type="tel" id="phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4AF37]">
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block text-sm font-medium text-navy mb-1">Assunto</label>
+                            <select id="subject" name="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4AF37]">
+                                <option value="">Selecione uma opção</option>
+                                <option value="agendamento">Agendamento de Consulta</option>
+                                <option value="informacoes">Informações sobre Serviços</option>
+                                <option value="outros">Outros</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-navy mb-1">Mensagem</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"></textarea>
+                        </div>
+                        
+                        <div>
+                            <button type="submit" class="w-full bg-navy hover:bg-opacity-90 text-white font-medium py-3 px-6 rounded-lg transition duration-300">Enviar Mensagem</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <section class="py-8">
+    <div class="container mx-auto px-4">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="h-80 w-full">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3325.77642805502!2d-40.85009892594199!3d-2.90090163952068!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7ebdb8021008ef9%3A0xb3d7b1a25595a20a!2sCentro%20M%C3%A9dico%20de%20Camocim!5e1!3m2!1spt-BR!2sbr!4v1748782678858!5m2!1spt-BR!2sbr6?q=R.+Riachuelo,+1668,+Camocim+-+CE&maptype=satellite&z=17" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Footer -->
+    <footer class="bg-navy text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <span class="text-3xl font-bold mr-2 logo-text">CMC</span>
+                        <span class="text-white font-semibold">Centro Médico de Camocim</span>
+                    </div>
+                    <p class="text-gray-300 mb-4">Cuidando da sua saúde com excelência e dedicação.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-300 hover:text-[#D4AF37] transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-[#D4AF37] transition duration-300">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-300 hover:text-[#D4AF37] transition duration-300">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Links Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#inicio" class="text-gray-300 hover:text-[#D4AF37] transition duration-300">Início</a></li>
+                        <li><a href="#sobre" class="text-gray-300 hover:text-[#D4AF37] transition duration-300">Sobre</a></li>
+                        <li><a href="#servicos" class="text-gray-300 hover:text-[#D4AF37] transition duration-300">Serviços</a></li>
+                        <li><a href="#contato" class="text-gray-300 hover:text-[#D4AF37] transition duration-300">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Contato</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-[#D4AF37] mr-3 mt-1"></i>
+                            <span>R. Riachuelo, Nº 1668, Camocim - CE</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt text-[#D4AF37] mr-3 mt-1"></i>
+                            <span>(88) 9200-8850</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-clock text-[#D4AF37] mr-3 mt-1"></i>
+                            <span>Seg-Sex: 8h às 18h<br>Sáb: 8h às 12h</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2025 Centro Médico de Camocim. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+   
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+        
+        // Contact Form Submission
+        const contactForm = document.getElementById('contact-form');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Simple validation
+            if (!name || !email || !phone || !subject || !message) {
+                alert('Por favor, preencha todos os campos do formulário.');
+                return;
+            }
+            
+            // In a real implementation, you would send this data to a server
+            // For demo purposes, we'll just show a success message
+            alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
+            contactForm.reset();
+        });
+        
+        // Scroll to Top Button
+        const scrollToTopButton = document.getElementById('scroll-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopButton.style.display = 'flex';
+            } else {
+                scrollToTopButton.style.display = 'none';
+            }
+        });
+        
+        scrollToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'948ed75966dcba1a',t:'MTc0ODc4MjI3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
